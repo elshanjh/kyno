@@ -3,29 +3,34 @@
 The KYNO website. Plain HTML and CSS, hosted on GitHub Pages. No build step:
 whatever is in the `main` branch is the live site.
 
+## Pages
+
+| Page | File |
+|---|---|
+| Home | `index.html` |
+| Biz kimik? | `haqqimizda/index.html` |
+| Podkastlar | `podkastlar/index.html` |
+| Instagram-da KYNO | `instagram/index.html` |
+| Bizə dəstək olun! | `destek/index.html` |
+| Əlaqə | `elaqe/index.html` |
+
+The header, menu and contact block are repeated in every page, so a change to
+one of them has to be made in each file.
+
 ## Changing things
 
-| What | Where |
-|---|---|
-| Any text or link | `index.html` |
-| Colours, fonts, spacing | `assets/css/style.css` (the `:root` block near the top holds the colours) |
-| Images | `assets/img/` |
-
-To edit on GitHub: open the file, click the pencil icon, change it, and press
-**Commit changes**. The site updates in about a minute.
-
-## Images
-
-- `hero-wide.jpg` and `hero-tall.jpg`: the banner at the top (wide screens and phones).
-- `kim-sorusdu.jpg`, `titrlardan-sonra-nagara.jpg`: podcast artwork.
-- `logo.svg`, `logo-black.svg`: the wordmark, traced from the podcast artwork.
-  Replace with an SVG exported from the original logo file when available.
+- **Text or links:** edit the page's file. On GitHub, open the file, click the
+  pencil icon, change it, and press **Commit changes**. The site updates in
+  about a minute.
+- **Colours, fonts, spacing:** `assets/css/style.css`. The `:root` block near the
+  top holds the colours.
+- **Images:** `assets/img/`.
 
 ## Instagram film strip
 
-Each frame shows a countdown number until a post is put in it. To add a post,
-save its picture in `assets/img/` and replace the frame's content in
-`index.html`, as described in the comment above the strip.
+On the Instagram page each frame shows a countdown number until a post is put
+in it. The comment above the strip in `instagram/index.html` shows the line to
+use for a post.
 
 ## Fonts
 

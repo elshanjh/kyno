@@ -397,19 +397,26 @@ h1, h2, h3, p { margin: 0; }
   text-align: center;
 }
 .credits .heading { font-size: clamp(2.5rem, 6.5vw, 5rem); }
-.roll {
-  margin: clamp(2rem, 5vw, 3.25rem) auto 0; padding: 0;
-  display: grid; grid-template-columns: 1fr 1fr;
-  column-gap: clamp(.9rem, 3vw, 1.75rem); row-gap: .5rem;
-  max-width: 36rem;
-  font-family: var(--display);
-  font-size: clamp(1.4rem, 3.2vw, 2rem);
-  line-height: 1.2;
+.socials {
+  list-style: none; padding: 0;
+  margin: clamp(2rem, 5vw, 3.25rem) auto 0;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: clamp(.75rem, 2vw, 1.25rem);
 }
-.roll dt { text-align: right; color: var(--dim); font-weight: 500; }
-.roll dd { margin: 0; text-align: left; font-weight: 800; }
-.roll a { text-decoration: none; border-bottom: 3px solid transparent; }
-.roll a:hover { border-bottom-color: var(--red); }
+.social {
+  display: flex; align-items: center; gap: .9rem;
+  padding: .85rem 1.5rem .85rem 1.1rem;
+  border: 2px solid var(--white);
+  color: var(--white);
+  text-decoration: none; text-align: left;
+  font-family: var(--display);
+  transition: background-color .15s, border-color .15s;
+}
+.social svg { width: 2.4rem; height: 2.4rem; flex: none; fill: currentColor; }
+.social span { display: grid; font-weight: 500; font-size: 1.1rem; line-height: 1.15; color: var(--dim); }
+.social b { font-weight: 800; font-size: 1.5rem; letter-spacing: .02em; color: var(--white); }
+.social:hover { background: var(--red); border-color: var(--red); }
+.social:hover span { color: var(--white); }
 
 .contact { margin-top: clamp(4.5rem, 11vw, 8rem); }
 .contact p { margin: 1.1rem auto 0; max-width: 34rem; color: var(--dim); }
@@ -433,6 +440,7 @@ h1, h2, h3, p { margin: 0; }
 @media (max-width: 40rem) {
   .still img { height: 70svh; min-height: 24rem; max-height: 34rem; }
   .nav { gap: .85rem; }
+  .socials { flex-direction: column; align-items: stretch; max-width: 19rem; }
   .support-art { max-width: 76%; margin-bottom: 1rem; }
   .nav a { font-size: 1rem; letter-spacing: .01em; }
   .title-card { font-size: 25vw; line-height: 1.02; }
@@ -441,5 +449,5 @@ h1, h2, h3, p { margin: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .poster, .frame img, .btn, .ticket { transition: none; }
+  .poster, .frame img, .btn, .ticket, .social { transition: none; }
 }

@@ -410,44 +410,86 @@ h1, h2, h3, p { margin: 0; }
 .footbar a { color: var(--white); text-decoration: none; }
 .footbar a:hover { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: .25em; }
 
-/* ---------- The end (home page only) ---------- */
+/* ---------- The end (home page only): a cinema, lights down ---------- */
 .fin {
+  --seats: clamp(9.5rem, 27vw, 21rem);
+  --curtain: clamp(1.5rem, 9vw, 9rem);
   position: relative;
   min-height: 100svh;
-  background: var(--black);
+  overflow: hidden;
   color: var(--white);
   display: grid; place-items: center;
   text-align: center;
-  padding: 3rem var(--gutter);
+  padding: clamp(2.5rem, 6vw, 5rem) calc(var(--curtain) + .85rem) calc(var(--seats) * .8);
+  background: radial-gradient(ellipse 75% 60% at 50% 36%, #1c1c1f 0%, #0a0a0b 55%, #030303 100%);
 }
-.fin::before {                         /* the edge of the projected frame */
-  content: ""; position: absolute; inset: clamp(.9rem, 2.5vw, 1.75rem);
-  border: 1px solid rgba(255, 255, 255, .28);
-  border-radius: clamp(.75rem, 2vw, 1.5rem);
+.fin::before, .fin::after {            /* curtains drawn back at the sides */
+  content: ""; position: absolute; top: 0; bottom: 0; width: var(--curtain);
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.85)),
+    repeating-linear-gradient(90deg, #2a0305 0, #6b080d 1.1rem, #3b0407 1.9rem, #7a0a10 2.7rem, #2a0305 3.6rem);
   pointer-events: none;
 }
-.fin::after {
+.fin::before { left: 0; box-shadow: 1.5rem 0 3rem rgba(0,0,0,.7); }
+.fin::after { right: 0; box-shadow: -1.5rem 0 3rem rgba(0,0,0,.7); }
+
+.screen {
+  container-type: inline-size;
+  position: relative;
+  width: min(100%, 64rem);
+  aspect-ratio: 2.1 / 1;
+  display: grid; place-items: center;
+  background: radial-gradient(ellipse at center, #17171a 0%, #0c0c0d 75%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .07),
+    0 0 5rem .5rem rgba(255, 255, 255, .09),
+    0 3rem 9rem rgba(200, 7, 14, .22);
+}
+.screen::after {                       /* film grain on the projection */
   content: ""; position: absolute; inset: 0;
-  background-image: var(--grain); opacity: .09; filter: invert(1);
+  background-image: var(--grain); opacity: .12; filter: invert(1);
   pointer-events: none;
 }
 .fin-word {
   font-family: var(--display); font-weight: 900;
-  font-size: clamp(6rem, 24vw, 20rem);
+  font-size: 9vw;
+  font-size: 20cqw;
   line-height: .85;
   color: var(--red);
   white-space: nowrap;
 }
-.fin-mark { margin: clamp(1.5rem, 4vw, 2.5rem) auto 0; height: 1.9rem; width: auto; }
+.fin-mark { margin: 3.2cqw auto 0; height: clamp(1.1rem, 3.6cqw, 2.2rem); width: auto; }
 .fin-since {
-  margin-top: .9rem;
+  margin-top: 1.2cqw;
   font-family: var(--display); font-weight: 500;
-  font-size: 1rem; letter-spacing: .08em;
+  font-size: clamp(.75rem, 1.7cqw, 1.05rem); letter-spacing: .08em;
   color: var(--dim);
 }
+
+.seats { position: absolute; left: 0; right: 0; bottom: 0; height: var(--seats); pointer-events: none; }
+.seats i {
+  position: absolute; left: 0; right: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2334353a'/%3E%3Cstop offset='.5' stop-color='%23111113'/%3E%3Cstop offset='1' stop-color='%23070708'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 76h11v44H0zM89 76h11v44H89z' fill='%230a0a0b'/%3E%3Cpath d='M9 120V34Q9 6 37 6h26q28 0 28 28v86z' fill='url(%23g)'/%3E%3Cpath d='M10 34Q10 7 37 7h26q27 0 27 27' fill='none' stroke='%23ffffff' stroke-opacity='.2' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+}
+.seats i:nth-child(1) { bottom: 56%; height: 34%; background-size: auto 100%; background-position: center bottom; opacity: .85; }
+.seats i:nth-child(2) { bottom: 26%; height: 50%; background-size: auto 100%; background-position: calc(50% + var(--seats) * .21) bottom; }
+.seats i:nth-child(3) { bottom: -8%; height: 70%; background-size: auto 100%; background-position: center bottom; filter: brightness(.8); }
+.seats::after {                        /* the floor falls into darkness */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,.75) 100%);
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .js .fin-inner { opacity: 0; transition: opacity 2.2s ease; }
+  .js .fin-inner { opacity: 0; transition: opacity 2.4s ease .3s; }
   .js .fin.is-in .fin-inner { opacity: 1; }
+  .js .fin.is-in .screen { animation: flicker 5s steps(1) 2.7s infinite; }
+}
+@keyframes flicker {                   /* the faint unsteadiness of a projector lamp */
+  0%, 100% { filter: brightness(1); }
+  41% { filter: brightness(.94); }
+  43% { filter: brightness(1.03); }
+  78% { filter: brightness(.97); }
 }
 
 /* ---------- Small screens ---------- */
@@ -460,7 +502,9 @@ h1, h2, h3, p { margin: 0; }
   .still img { height: 68vw; }
   .support-art { max-width: 15rem; }
   .socials { flex-direction: column; align-items: stretch; max-width: 20rem; }
-  .fin-word { font-size: 24vw; }
+  .fin { min-height: 0; padding-top: 3.25rem; padding-bottom: calc(var(--seats) * .72); }
+  .screen { aspect-ratio: 16 / 11; }
+  .fin-word { font-size: 17vw; font-size: 24cqw; }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn, .ticket, .social, .poster img, .fest-link { transition: none; }

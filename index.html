@@ -9,6 +9,7 @@
   <meta property="og:description" content="Dünya kinosundan xəbərlər, təhlillər, tövsiyələr və maraqlı məlumatlar əldə edə biləcəyiniz kino səhifəsi.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="az_AZ">
+  <meta property="og:image" content="assets/img/hero-wide.jpg">
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -17,11 +18,8 @@
 <body>
   <a class="skip" href="#haqqimizda">Məzmuna keç</a>
 
-  <header class="opening on-black">
-    <div class="wrap masthead">
-      <!-- Logo: put the logo file at assets/img/logo.svg (white version) and
-           replace the word below with: <img src="assets/img/logo.svg" alt="KYNO"> -->
-      <a class="wordmark" href="./" aria-label="KYNO, ana səhifə">kyno</a>
+  <header class="opening">
+    <div class="masthead on-black">
       <nav class="nav" aria-label="Əsas menyu">
         <a href="#haqqimizda">Biz kimik?</a>
         <a href="#podkastlar">Podkastlar</a>
@@ -29,22 +27,28 @@
       </nav>
     </div>
 
-    <div class="wrap">
-      <div class="screen">
+    <div class="still">
+      <picture>
+        <source media="(max-width: 40rem)" srcset="assets/img/hero-tall.jpg">
+        <img src="assets/img/hero-wide.jpg" alt="KYNO" width="2050" height="780">
+      </picture>
+    </div>
+
+    <div class="titles paper">
+      <div class="wrap">
         <h1 class="title-card">KİNO ÜÇÜN KYNO!</h1>
-        <p class="subtitle">
-          <span>Dünya kinosundan xəbərlər, təhlillər, tövsiyələr</span>
-          <span>və maraqlı məlumatlar əldə edə biləcəyiniz kino səhifəsi.</span>
-        </p>
+        <p class="tagline">Dünya kinosundan xəbərlər, təhlillər, tövsiyələr və maraqlı məlumatlar əldə edə biləcəyiniz kino səhifəsi.</p>
       </div>
     </div>
-    <div class="opening-foot"></div>
   </header>
 
   <main>
-    <section class="about" id="haqqimizda">
+    <section class="about paper" id="haqqimizda">
       <div class="wrap about-grid">
-        <h2 class="heading">Biz kimik?</h2>
+        <div>
+          <h2 class="heading">Biz kimik?</h2>
+          <p class="since" aria-hidden="true">2019</p>
+        </div>
         <div class="about-body">
           <p>2019-cu ildən fəaliyyət göstərən KYNO olaraq bütün sosial medialarda insanlara film sevgisini aşılamağa, onlara kino dünyasının maraqlı tərəfini göstərməyə, ən son xəbərləri çatdırmağa çalışırıq.</p>
           <p>Kinolardan sitatlar, fraqmentlər, maraqlı məlumatlar paylaşmaqla yanaşı, həmçinin, bu mövzuda müxtəlif podkastlar da yayımlayırıq. Öz fəaliyyətimizdən əlavə olaraq, Azərbaycanda bu sahə ilə bağlı göstərilən layihələrə də dəstək oluruq.</p>
@@ -52,34 +56,56 @@
       </div>
     </section>
 
-    <section class="podcasts" id="podkastlar">
+    <div class="clapper" aria-hidden="true"></div>
+
+    <section class="podcasts on-black" id="podkastlar">
       <div class="wrap">
-        <h2 class="heading">Podkastlar</h2>
+        <h2 class="heading red">Podkastlar</h2>
         <p class="podcasts-intro">Həmçinin “Youtube” və “Spotify” platformaları üzərindən podkastlarımızı dinləyə bilərsiniz.</p>
 
         <ul class="shows">
           <li class="show">
-            <!-- Cover: replace the span with <img src="assets/img/kim-sorusdu.jpg" alt=""> -->
-            <div class="cover cover--light" aria-hidden="true"><span>Kim Soruşdu?</span></div>
-            <div>
-              <h3 class="show-title">Kim Soruşdu?</h3>
-              <div class="show-links">
-                <a class="btn" href="https://open.spotify.com/show/1YhNPutoVqkkqXRT534pQ5" aria-label="Kim Soruşdu? Spotify-da">Spotify</a>
-                <a class="btn btn--line" href="https://www.youtube.com/watch?v=a9Nwf0Pw_MU&amp;list=PL9-2Umei4m0TgS4Q72XhKm7tCMsFhO5Pe" aria-label="Kim Soruşdu? YouTube-da">YouTube</a>
-              </div>
+            <a class="poster" href="https://www.youtube.com/watch?v=a9Nwf0Pw_MU&amp;list=PL9-2Umei4m0TgS4Q72XhKm7tCMsFhO5Pe" aria-label="Kim Soruşdu? YouTube-da">
+              <img src="assets/img/kim-sorusdu.jpg" alt="" width="1280" height="720" loading="lazy">
+            </a>
+            <h3 class="show-title">Kim Soruşdu?</h3>
+            <div class="show-links">
+              <a class="btn" href="https://open.spotify.com/show/1YhNPutoVqkkqXRT534pQ5" aria-label="Kim Soruşdu? Spotify-da">Spotify</a>
+              <a class="btn btn--line" href="https://www.youtube.com/watch?v=a9Nwf0Pw_MU&amp;list=PL9-2Umei4m0TgS4Q72XhKm7tCMsFhO5Pe" aria-label="Kim Soruşdu? YouTube-da">YouTube</a>
             </div>
           </li>
           <li class="show">
-            <!-- Cover: replace the span with <img src="assets/img/titrlardan-sonra-nagara.jpg" alt=""> -->
-            <div class="cover" aria-hidden="true"><span>Titrlardan sonra nağara</span></div>
-            <div>
-              <h3 class="show-title">Titrlardan sonra nağara</h3>
-              <div class="show-links">
-                <a class="btn" href="https://open.spotify.com/show/1YhNPutoVqkkqXRT534pQ5" aria-label="Titrlardan sonra nağara Spotify-da">Spotify</a>
-                <a class="btn btn--line" href="https://www.youtube.com/watch?v=eTS5efwyNBw" aria-label="Titrlardan sonra nağara YouTube-da">YouTube</a>
-              </div>
+            <a class="poster" href="https://www.youtube.com/watch?v=eTS5efwyNBw" aria-label="Titrlardan sonra nağara YouTube-da">
+              <img src="assets/img/titrlardan-sonra-nagara.jpg" alt="" width="960" height="960" loading="lazy">
+            </a>
+            <h3 class="show-title">Titrlardan sonra nağara</h3>
+            <div class="show-links">
+              <a class="btn" href="https://open.spotify.com/show/1YhNPutoVqkkqXRT534pQ5" aria-label="Titrlardan sonra nağara Spotify-da">Spotify</a>
+              <a class="btn btn--line" href="https://www.youtube.com/watch?v=eTS5efwyNBw" aria-label="Titrlardan sonra nağara YouTube-da">YouTube</a>
             </div>
           </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="reel paper" aria-labelledby="reel-title">
+      <div class="wrap reel-head">
+        <h2 class="heading" id="reel-title">Instagram-da KYNO</h2>
+        <a class="btn btn--dark" href="https://www.instagram.com/kyno.az/">@kyno.az</a>
+      </div>
+
+      <!-- The film strip. Each frame shows a countdown number until a post is
+           put in it. To add a post, save its picture in assets/img/ and replace
+           a frame's content with:
+           <a href="POST LINK"><img src="assets/img/FILE.jpg" alt="SHORT DESCRIPTION" loading="lazy"></a> -->
+      <div class="strip">
+        <ul class="frames" tabindex="0" aria-label="Instagram paylaşımları">
+          <li class="frame leader" aria-hidden="true"><span>6</span></li>
+          <li class="frame leader" aria-hidden="true"><span>5</span></li>
+          <li class="frame leader" aria-hidden="true"><span>4</span></li>
+          <li class="frame leader" aria-hidden="true"><span>3</span></li>
+          <li class="frame leader" aria-hidden="true"><span>2</span></li>
+          <li class="frame leader" aria-hidden="true"><span>1</span></li>
         </ul>
       </div>
     </section>
@@ -102,6 +128,7 @@
         <p>Bizimlə <a href="mailto:info@kyno.az">info@kyno.az</a> vasitəsilə əlaqə saxlaya bilərsiniz.</p>
       </div>
 
+      <p class="fin" aria-hidden="true">SON</p>
       <p class="end">KYNO, 2019-cu ildən</p>
     </div>
   </footer>

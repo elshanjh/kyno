@@ -342,6 +342,54 @@ h1, h2, h3, p { margin: 0; }
 .leader::after  { width: 66%; aspect-ratio: 1; }
 .leader span { position: relative; z-index: 1; }
 
+/* ---------- Dəstək ---------- */
+.support {
+  background: var(--red); color: var(--white);
+  padding-block: clamp(4rem, 10vw, 8rem);
+  overflow: hidden;
+}
+.support-grid { display: grid; gap: clamp(2.5rem, 6vw, 5rem); grid-template-columns: 1fr; align-items: center; }
+@media (min-width: 56rem) { .support-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+.support-art { max-width: 26rem; justify-self: center; width: 100%; }
+.support-art img {
+  width: 100%; height: auto;
+  transform: rotate(-3deg);
+  box-shadow: 0 0 0 .6rem var(--white), 1.1rem 1.3rem 0 .6rem var(--black);   /* pasted-up poster */
+}
+.support-body { max-width: 58ch; }
+.support-body p { margin-top: 1.1em; }
+.support-body .heading + p { margin-top: 1.5rem; font-size: clamp(1.2rem, 1.9vw, 1.45rem); line-height: 1.5; }
+.support-body p a { text-decoration-thickness: 2px; text-underline-offset: .2em; font-weight: 600; }
+
+/* The button is a cinema ticket: notched ends and a perforated stub */
+.ticket {
+  --notch: .55rem;
+  display: inline-block;
+  margin-top: 2.25rem;
+  padding: 1.05rem 2.4rem 1rem 4.3rem;
+  font-family: var(--display); font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  letter-spacing: .03em; line-height: 1;
+  text-decoration: none;
+  color: var(--black);
+  background:
+    linear-gradient(var(--black), var(--black)) 3rem 50% / 2px 100% no-repeat,
+    var(--white);
+  background-image:
+    repeating-linear-gradient(to bottom, var(--black) 0 .3rem, transparent .3rem .6rem),
+    linear-gradient(var(--white), var(--white));
+  background-size: 2px 100%, 100% 100%;
+  background-position: 3rem 0, 0 0;
+  background-repeat: no-repeat;
+  -webkit-mask: radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+                radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+          mask: radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+                radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  transition: transform .15s ease;
+}
+.ticket:hover { transform: rotate(-2deg) scale(1.03); }
+.ticket:focus-visible { outline: 3px solid var(--black); outline-offset: 4px; }
+
 /* ---------- Closing credits ---------- */
 .credits {
   background: var(--black); color: var(--white);
@@ -384,11 +432,14 @@ h1, h2, h3, p { margin: 0; }
 /* ---------- Small screens ---------- */
 @media (max-width: 40rem) {
   .still img { height: 70svh; min-height: 24rem; max-height: 34rem; }
+  .nav { gap: .85rem; }
+  .support-art { max-width: 76%; margin-bottom: 1rem; }
+  .nav a { font-size: 1rem; letter-spacing: .01em; }
   .title-card { font-size: 25vw; line-height: 1.02; }
   .show:nth-child(1) .poster, .show:nth-child(2) .poster { transform: none; }
   .strip { transform: rotate(-3deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .poster, .frame img, .btn { transition: none; }
+  .poster, .frame img, .btn, .ticket { transition: none; }
 }

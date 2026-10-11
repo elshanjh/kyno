@@ -1,21 +1,21 @@
 # kyno.az
 
-The KYNO website. Plain HTML and CSS, hosted on GitHub Pages. No build step:
-whatever is in the `main` branch is the live site.
+The KYNO website, in Azerbaijani and English. Plain HTML and CSS, hosted on
+GitHub Pages. No build step: whatever is in the `main` branch is the live site.
 
 ## Pages
 
-| Page | File |
-|---|---|
-| Home | `index.html` |
-| Biz kimik? | `haqqimizda/index.html` |
-| Podkastlar | `podkastlar/index.html` |
-| Instagram-da KYNO | `instagram/index.html` |
-| Bizə dəstək olun! | `destek/index.html` |
-| Əlaqə | `elaqe/index.html` |
+| Page | Azerbaijani | English |
+|---|---|---|
+| Home | `index.html` | `en/index.html` |
+| About | `haqqimizda/index.html` | `en/about/index.html` |
+| Podcasts | `podkastlar/index.html` | `en/podcasts/index.html` |
+| Social media | `sosial-media/index.html` | `en/social/index.html` |
+| Support | `destek/index.html` | `en/support/index.html` |
+| Contact | `elaqe/index.html` | `en/contact/index.html` |
 
-The header, menu and contact block are repeated in every page, so a change to
-one of them has to be made in each file.
+The header, menu and contact block are repeated in every page, and each page
+exists once per language, so a change to shared text has to be made in each file.
 
 ## Changing things
 
@@ -26,13 +26,14 @@ one of them has to be made in each file.
   top holds the colours.
 - **Images:** `assets/img/`.
 
-## Instagram film strip
+## Instagram posts
 
-On the Instagram page each frame shows a countdown number until a post is put
-in it. The comment above the strip in `instagram/index.html` shows the line to
-use for a post.
+The film strip on the home and social media pages embeds posts straight from
+Instagram. To change a post, find its line in the page (it contains
+`instagram.com/p/...`) and replace the code after `/p/` in both places with the
+code from the new post's link. The embeds load a script from instagram.com.
 
 ## Fonts
 
 Big Shoulders Display and Literata, both under the SIL Open Font License and
-served from `assets/fonts/` so the site makes no requests to third parties.
+served from `assets/fonts/`.

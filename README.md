@@ -13,6 +13,7 @@ GitHub Pages. No build step: whatever is in the `main` branch is the live site.
 | Social media | `sosial-media/index.html` | `en/social/index.html` |
 | Support | `destek/index.html` | `en/support/index.html` |
 | Contact | `elaqe/index.html` | `en/contact/index.html` |
+| Kino gündəliyi | `kino-gundeliyi/index.html` | `en/newsletter/index.html` |
 
 The header, menu and contact block are repeated in every page, and each page
 exists once per language, so a change to shared text has to be made in each file.
@@ -25,6 +26,22 @@ exists once per language, so a change to shared text has to be made in each file
 - **Colours, fonts, spacing:** `assets/css/style.css`. The `:root` block near the
   top holds the colours.
 - **Images:** `assets/img/`.
+
+## Editing text on the live site
+
+Open any page with `?edit` at the end of the address, for example
+`https://www.kyno.az/haqqimizda/?edit`. Paste a GitHub token that can write to
+this repository, click **Edit this page**, change the outlined text and press
+**Save**. The editor (`assets/edit.js`) saves the page file straight to this
+repository and the live site updates in about a minute. The token is kept only
+in that browser; **Sign out** removes it.
+
+Each language is a separate page, so a change on an Azerbaijani page has to be
+made on its English page too.
+
+Because the editor changes these HTML files directly, the files in this
+repository are the source of truth. Always start from the latest version before
+making other changes.
 
 ## Instagram posts
 

@@ -186,6 +186,13 @@ h1, h2, h3, p { margin: 0; }
 }
 .nav a:hover, .nav a[aria-current="page"] { border-bottom-color: var(--red); }
 .nav .lang { border: 2px solid var(--white); padding: .12rem .5rem .08rem; }
+.nav .nl-btn {                         /* newsletter signup, opens the Brevo form */
+  background: var(--red); color: var(--white);
+  border-bottom: 0;
+  padding: .3rem 1.05rem .26rem .8rem;
+  clip-path: polygon(0 0, 100% 0, calc(100% - .45rem) 100%, 0 100%);
+}
+.nav .nl-btn:hover { background: var(--white); color: var(--black); }
 .nav .lang:hover { background: var(--red); border-color: var(--red); }
 
 /* ---------- Home: opening ---------- */
@@ -529,6 +536,7 @@ h1, h2, h3, p { margin: 0; }
   .nav { width: 100%; gap: .1rem .9rem; }
   .nav a { font-size: 1rem; letter-spacing: .01em; }
   .nav .lang { position: absolute; top: .75rem; right: var(--gutter); }
+  .nav .nl-btn { position: absolute; top: .75rem; right: calc(var(--gutter) + 3rem); font-size: .95rem; }
   .wordmark img { height: 1.8rem; }
   .still img { height: 68vw; }
   .support-art { max-width: 15rem; }

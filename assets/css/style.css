@@ -367,6 +367,7 @@ h1, h2, h3, p { margin: 0; }
   padding-block: 2rem;
 }
 .journal .wrap { width: 100%; }
+.journal--page { min-height: calc(100svh - 4.5rem); }
 @media (max-width: 40rem) {
   .journal { background-image: url("../img/journal-tall.jpg"); aspect-ratio: 9 / 16; min-height: 0; }
   .journal .journal-card { max-width: 100%; }

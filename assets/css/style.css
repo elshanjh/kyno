@@ -350,6 +350,29 @@ h1, h2, h3, p { margin: 0; }
 }
 .ticket:hover { transform: scale(1.04); }
 
+
+/* ---------- Kino gündəliyi (newsletter) ---------- */
+.journal {
+  background: #e4e2db url("../img/journal.jpg") center / cover no-repeat;
+  padding-block: clamp(5rem, 13vw, 10rem);
+}
+.journal-card {
+  max-width: 36rem;
+  margin-inline: auto;
+  background: var(--white);
+  padding: clamp(1.75rem, 4.5vw, 3rem);
+  box-shadow: 0 .9rem 2.2rem rgba(0, 0, 0, .25);
+  transform: rotate(-1deg);
+}
+.journal-card .display { color: var(--red); font-size: clamp(2.75rem, 6.5vw, 4.75rem); }
+.journal-card .lead { margin-top: 1rem; }
+.ticket--red {
+  color: var(--white);
+  background-color: var(--red);
+  background-image: repeating-linear-gradient(to bottom, var(--white) 0 .3rem, transparent .3rem .6rem);
+}
+.ticket--red:focus-visible { outline-color: var(--black); }
+
 /* ---------- Contact and socials ---------- */
 .mail {
   display: inline-block;

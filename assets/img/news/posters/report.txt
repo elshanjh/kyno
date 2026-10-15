@@ -1,7 +1,0 @@
-woman-unknown	wikipedia: May el-Toukhy	https://upload.wikimedia.org/wikipedia/commons/f/f1/May_el-Toukhy.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=original
-the-social-reckoning	wikipedia: Jeff Horwitz	https://upload.wikimedia.org/wikipedia/commons/c/c0/Jeff_Horwitz_at_the_2025_Knight_Media_Forum_3_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=original
-digger	wikipedia: Alejandro González Iñárritu	https://upload.wikimedia.org/wikipedia/commons/0/04/MKr386809_Alejandro_Gonz%C3%A1lez_I%C3%B1%C3%A1rritu_%28Amores_Perros%2C_Cannes_2025%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=original
-other-mommy	wikipedia (no image): Muscle mommy | tmdb: No Results	https://image.tmdb.org/t/p/w500/fGRNCssTRrhYZxNzykGGCoMsAVq.jpg
-godzilla-minus-zero	wikipedia (no image): Godzilla Minus One | tmdb: No Results	https://image.tmdb.org/t/p/w500/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg
-wild-horse-nine	wikipedia: Martin McDonagh	https://upload.wikimedia.org/wikipedia/commons/6/6d/Martin_McDonagh_at_83rd_Venice_International_Film_Festival-7_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=original
-cliff-booth	wikipedia: Karren Karagulian	https://upload.wikimedia.org/wikipedia/commons/7/76/Karren_Karagulian_at_the_2024_New_York_Film_Festival.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=original

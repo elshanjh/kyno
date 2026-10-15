@@ -1,0 +1,72 @@
+name: Fetch newsletter posters
+on:
+  push:
+    paths: [".github/workflows/posters.yml"]
+permissions:
+  contents: write
+jobs:
+  posters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - name: Fetch posters
+        run: |
+          mkdir -p assets/img/news/posters
+          python3 - <<'PY'
+          import json, urllib.parse, urllib.request, io
+          from PIL import Image, ImageOps
+          UA = {"User-Agent": "KYNO newsletter (info@kyno.az)"}
+          API = "https://en.wikipedia.org/w/api.php?"
+          def get(url):
+              return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30).read()
+          def q(**kw):
+              kw["format"] = "json"
+              return json.loads(get(API + urllib.parse.urlencode(kw)))
+          films = {
+            "woman-unknown": "Woman Unknown",
+            "the-social-reckoning": "The Social Reckoning",
+            "digger": "Digger",
+            "other-mommy": "Other Mommy",
+            "godzilla-minus-zero": "Godzilla Minus Zero",
+            "wild-horse-nine": "Wild Horse Nine",
+            "cliff-booth": "The Further Mis-Adventures of Cliff Booth",
+            "verity": "Verity",
+          }
+          report = []
+          for slug, name in films.items():
+              res = q(action="query", list="search", srsearch=name + " film", srlimit=10)["query"]["search"]
+              titles = [r["title"] for r in res]
+              cands = [t for t in titles if t.lower().startswith(name.lower()) and ("film" in t.lower() or t.lower() == name.lower())]
+              cands.sort(key=lambda t: (0 if "2026 film" in t else 1 if "film)" in t else 2))
+              line = "%s\tcandidates=%s" % (slug, titles[:6])
+              for t in cands:
+                  pages = q(action="query", titles=t, prop="pageprops", redirects=1)["query"]["pages"]
+                  pp = list(pages.values())[0].get("pageprops", {})
+                  img = pp.get("page_image") or pp.get("page_image_free")
+                  if not img:
+                      line += "\t%s: no image" % t; continue
+                  info = q(action="query", titles="File:" + img, prop="imageinfo", iiprop="url")["query"]["pages"]
+                  url = list(info.values())[0]["imageinfo"][0]["url"]
+                  im = ImageOps.exif_transpose(Image.open(io.BytesIO(get(url)))).convert("RGB")
+                  w, h = im.size
+                  line += "\tUSED %s: %s (%dx%d)" % (t, img, w, h)
+                  if h < w:
+                      line += " NOT-A-POSTER"; continue
+                  if w < 400:
+                      im = im.resize((400, round(h * 400 / w)), Image.LANCZOS)
+                  im = ImageOps.fit(im, (400, 600), Image.LANCZOS)
+                  im.save("assets/img/news/posters/%s.jpg" % slug, quality=85, optimize=True, progressive=True)
+                  break
+              report.append(line)
+          open("assets/img/news/posters/report.txt", "w").write("\n".join(report) + "\n")
+          print("\n".join(report))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/posters.yml
+          git add assets/img/news/posters
+          git commit -m "Add film posters for newsletter #1"
+          git push

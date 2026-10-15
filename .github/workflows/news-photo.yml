@@ -1,0 +1,36 @@
+name: Make newsletter photo
+on:
+  push:
+    paths: [".github/workflows/news-photo.yml"]
+permissions:
+  contents: write
+jobs:
+  photo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - name: Download and convert to black and white
+        run: |
+          curl -fsSL -A "KYNO newsletter (info@kyno.az)" -o /tmp/raw.jpg \
+            "https://upload.wikimedia.org/wikipedia/commons/f/fe/RJ_Mitte_by_Gage_Skidmore.jpg"
+          mkdir -p assets/img/news
+          python3 - <<'PY'
+          from PIL import Image, ImageOps
+          im = ImageOps.exif_transpose(Image.open("/tmp/raw.jpg")).convert("L")
+          w, h = im.size
+          tw, th = (w, int(w * 3 / 4)) if w / h < 4 / 3 else (int(h * 4 / 3), h)
+          left = (w - tw) // 2
+          top = int((h - th) * 0.15)
+          im = im.crop((left, top, left + tw, top + th)).resize((1040, 780), Image.LANCZOS)
+          im = ImageOps.autocontrast(im, cutoff=1)
+          im.save("assets/img/news/rj-mitte.jpg", quality=84, optimize=True, progressive=True)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/news-photo.yml
+          git add assets/img/news/rj-mitte.jpg
+          git commit -m "Add black-and-white RJ Mitte photo for newsletter #1"
+          git push

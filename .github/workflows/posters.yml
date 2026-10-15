@@ -1,0 +1,78 @@
+name: Fetch newsletter posters
+on:
+  push:
+    paths: [".github/workflows/posters.yml"]
+permissions:
+  contents: write
+jobs:
+  posters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - name: Fetch posters
+        run: |
+          mkdir -p assets/img/news/posters
+          python3 - <<'PY'
+          import json, re, urllib.parse, urllib.request, io
+          from PIL import Image, ImageOps
+          UA = {"User-Agent": "KYNO newsletter (info@kyno.az)"}
+          def get(url):
+              return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30).read()
+          films = {
+            "woman-unknown": "Woman Unknown May el-Toukhy",
+            "the-social-reckoning": "The Social Reckoning Aaron Sorkin film",
+            "digger": "Digger 2026 film Iñárritu Tom Cruise",
+            "other-mommy": "Other Mommy 2026 film",
+            "godzilla-minus-zero": "Godzilla Minus Zero film",
+            "wild-horse-nine": "Wild Horse Nine film McDonagh",
+            "cliff-booth": "The Further Mis-Adventures of Cliff Booth",
+          }
+          tmdb_q = {
+            "woman-unknown": "Woman Unknown", "the-social-reckoning": "The Social Reckoning",
+            "digger": "Digger", "other-mommy": "Other Mommy", "godzilla-minus-zero": "Godzilla Minus Zero",
+            "wild-horse-nine": "Wild Horse Nine", "cliff-booth": "The Further Mis-Adventures of Cliff Booth",
+          }
+          report = []
+          for slug, q in films.items():
+              src = None; note = ""
+              try:
+                  api = "https://en.wikipedia.org/w/api.php?" + urllib.parse.urlencode({
+                      "action": "query", "format": "json", "generator": "search", "gsrsearch": q,
+                      "gsrlimit": 3, "prop": "pageimages", "piprop": "original"})
+                  pages = sorted(json.loads(get(api))["query"]["pages"].values(), key=lambda p: p["index"])
+                  for p in pages:
+                      if "original" in p:
+                          src = p["original"]["source"]; note = "wikipedia: " + p["title"]; break
+                      note = "wikipedia (no image): " + p["title"]
+              except Exception as e:
+                  note = "wikipedia error %s" % e
+              if not src:
+                  try:
+                      html = get("https://www.themoviedb.org/search/movie?query=" + urllib.parse.quote(tmdb_q[slug])).decode("utf8", "ignore")
+                      m = re.search(r'/t/p/[^/"]+/([A-Za-z0-9]+\.jpg)', html)
+                      t = re.search(r'<h2>([^<]+)</h2>', html)
+                      if m:
+                          src = "https://image.tmdb.org/t/p/w500/" + m.group(1)
+                          note += " | tmdb: " + (t.group(1) if t else "?")
+                  except Exception as e:
+                      note += " | tmdb error %s" % e
+              if src:
+                  try:
+                      im = ImageOps.exif_transpose(Image.open(io.BytesIO(get(src)))).convert("RGB")
+                      im = ImageOps.fit(im, (400, 600), Image.LANCZOS, centering=(0.5, 0.5))
+                      im.save("assets/img/news/posters/%s.jpg" % slug, quality=84, optimize=True, progressive=True)
+                  except Exception as e:
+                      note += " | download error %s" % e; src = None
+              report.append("%s\t%s\t%s" % (slug, note, src))
+          open("assets/img/news/posters/report.txt", "w").write("\n".join(report) + "\n")
+          print("\n".join(report))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/posters.yml
+          git add assets/img/news/posters
+          git commit -m "Add film posters for newsletter #1"
+          git push

@@ -1,5 +1,0 @@
-woman-unknown	USED en:Woman Unknown (film) Woman_Unknown_film_poster.jpg (284x351)
-the-social-reckoning	USED fa:تسویه اجتماعی The_Social_Reckoning_poster.jpeg (258x387)
-other-mommy	USED he:אין כמו אמא אין_כמו_אמא.jpg (1792x2560)
-cliff-booth	skip en:The Further Mis-Adventures of Cliff Booth The_Further_Mis-Adventures_of_Cliff_Booth_poster.jpeg (489x204)	skip fa:ماجراهای عمدتا ناگوار کلیف بوث The_Further_Mis-Adventures_of_Cliff_Booth_poster.jpeg (489x204)	skip he:המשך מעלליו של קליף בות' The_Further_Mis-Adventures_of_Cliff_Booth_poster.jpeg (489x204)	USED ru:Новые похождения Клиффа Бута Новые_похождения_Клиффа_Бута.jpg (503x755)
-verity	USED el:Το Ημερολόγιο της Βέριτι Verity_Poster.png (895x1280)

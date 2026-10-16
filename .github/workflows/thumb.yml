@@ -1,0 +1,27 @@
+name: Fetch podcast thumbnail
+on:
+  push:
+    paths: [".github/workflows/thumb.yml"]
+permissions:
+  contents: write
+jobs:
+  thumb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - run: |
+          curl -fsSL -o /tmp/t.jpg https://i.ytimg.com/vi/k3SQ3l67E0M/maxresdefault.jpg
+          python3 -c "
+          from PIL import Image, ImageOps
+          im = Image.open('/tmp/t.jpg').convert('RGB')
+          print(im.size)
+          ImageOps.fit(im, (1280, 720), Image.LANCZOS).save('assets/img/kim-sorusdu-ep16.jpg', quality=84, optimize=True, progressive=True)
+          "
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/thumb.yml
+          git add assets/img/kim-sorusdu-ep16.jpg
+          git commit -m "Add Kim Soruşdu? episode 16 thumbnail"
+          git push

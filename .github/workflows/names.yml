@@ -1,0 +1,58 @@
+name: Names and pick posters
+on:
+  push:
+    paths: [".github/workflows/names.yml"]
+permissions:
+  contents: write
+jobs:
+  n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - run: |
+          python3 - <<'PY'
+          import json, urllib.parse, urllib.request, io
+          from PIL import Image, ImageOps
+          UA={"User-Agent":"KYNO newsletter (info@kyno.az)"}
+          def get(u): return urllib.request.urlopen(urllib.request.Request(u,headers=UA),timeout=30).read()
+          def q(lang,**kw):
+              kw["format"]="json"; return json.loads(get("https://%s.wikipedia.org/w/api.php?"%lang+urllib.parse.urlencode(kw)))
+          titles=["Aaron Sorkin","Alejandro González Iñárritu","Lee Chang-dong","May el-Toukhy","John Malkovich","Jeremy Strong","Mikey Madison","Jeremy Allen White","Tom Cruise","Takashi Yamazaki","Martin McDonagh","David Fincher","Brad Pitt","Sam Rockwell","Anne Hathaway","Dakota Johnson","Alma Har'el","RJ Mitte","Shia LaBeouf","Bernardo Bertolucci","Ingmar Bergman","Louis Malle","Hirokazu Kore-eda","Charlotte Wells","Marlon Brando","Paul Mescal","Homer","Christopher Nolan","Gage Skidmore",
+                  "Last Tango in Paris","Wild Strawberries (film)","The Fire Within","Maborosi (film)","Aftersun","Breaking Bad","Honey Boy (film)","Godzilla Minus One","Once Upon a Time in Hollywood","The Odyssey (2026 film)","Venice Film Festival","Golden Lion","Wall Street Journal","United Cerebral Palsy","Cerebral palsy","Easter Island"]
+          out=[]
+          for t in titles:
+              try:
+                  p=list(q("en",action="query",titles=t,prop="langlinks",lllimit=500,redirects=1)["query"]["pages"].values())[0]
+                  ll={l["lang"]:l["*"] for l in p.get("langlinks",[])}
+                  out.append("%s\taz=%s\tru=%s\ttr=%s"%(t,ll.get("az"),ll.get("ru"),ll.get("tr")))
+              except Exception as e: out.append("%s\terror %s"%(t,e))
+          picks={"last-tango-in-paris":"Last Tango in Paris","wild-strawberries":"Wild Strawberries (film)","the-fire-within":"The Fire Within","maborosi":"Maborosi (film)","aftersun":"Aftersun"}
+          for slug,t in picks.items():
+              try:
+                  p=list(q("en",action="query",titles=t,prop="pageprops|langlinks",lllimit=500,redirects=1)["query"]["pages"].values())[0]
+                  tries=[("en",p["title"])]+[(l["lang"],l["*"]) for l in p.get("langlinks",[])]
+                  ok=False
+                  for lang,tt in tries:
+                      try:
+                          pp=list(q(lang,action="query",titles=tt,prop="pageprops",redirects=1)["query"]["pages"].values())[0].get("pageprops",{})
+                          img=pp.get("page_image") or pp.get("page_image_free")
+                          if not img: continue
+                          url=list(q(lang,action="query",titles="File:"+img,prop="imageinfo",iiprop="url")["query"]["pages"].values())[0]["imageinfo"][0]["url"]
+                          im=ImageOps.exif_transpose(Image.open(io.BytesIO(get(url)))).convert("RGB")
+                          w,h=im.size
+                          if h<w*1.2: continue
+                          im.resize((400,round(h*400/w)),Image.LANCZOS).save("assets/img/news/posters/%s.jpg"%slug,quality=85,optimize=True,progressive=True)
+                          out.append("POSTER %s from %s:%s %s %dx%d"%(slug,lang,tt,img,w,h)); ok=True; break
+                      except Exception: continue
+                  if not ok: out.append("POSTER %s NONE"%slug)
+              except Exception as e: out.append("POSTER %s error %s"%(slug,e))
+          open("names-report.txt","w").write("\n".join(out)+"\n")
+          PY
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/names.yml
+          git add assets/img/news/posters names-report.txt
+          git commit -m "Pick posters and name lookup for newsletter #1"
+          git push

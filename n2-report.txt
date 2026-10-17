@@ -1,8 +1,0 @@
-Bryan Cranston	az=Brayan Krenston	ru=Крэнстон, Брайан
-Aaron Paul	az=Aaron Pol	ru=Пол, Аарон
-Sergei Parajanov	az=Sergey Paracanov	ru=Параджанов, Сергей Иосифович
-Shadows of Forgotten Ancestors (film)	az=None	ru=None
-maborosi search=['Maborosi', 'Hirokazu Kore-eda', 'Monster (2023 Japanese film)', 'After Life (film)', 'Tadanobu Asano']
-USED maborosi en:Maborosi Maborosi.jpg 265x374
-shadows-of-forgotten-ancestors search=['Shadows of Forgotten Ancestors', 'Sergei Parajanov', 'Shadows of Forgotten Ancestors (disambiguation)', 'A Spring for the Thirsty', '1965–1966 Ukrainian purge']
-USED shadows-of-forgotten-ancestors be:Цені забытых продкаў (фільм) Постар_фільма_Цені_забытых_продкаў.jpg 425x599

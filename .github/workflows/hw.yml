@@ -1,0 +1,57 @@
+name: Halloween posters
+on:
+  push:
+    paths: [".github/workflows/hw.yml"]
+permissions:
+  contents: write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - run: |
+          python3 - <<'PY'
+          import json, urllib.parse, urllib.request, io, re
+          from PIL import Image
+          UA={"User-Agent":"KYNO newsletter (info@kyno.az)"}
+          def get(u,ua=UA): return urllib.request.urlopen(urllib.request.Request(u,headers=ua),timeout=30).read()
+          def q(lang,**kw):
+              kw["format"]="json"; return json.loads(get("https://%s.wikipedia.org/w/api.php?"%lang+urllib.parse.urlencode(kw)))
+          out=[]
+          films={"over-the-garden-wall":"Over the Garden Wall","suspiria":"Suspiria (1977 film)","the-crow":"The Crow (1994 film)","eraserhead":"Eraserhead","the-fly":"The Fly (1986 film)"}
+          for slug,t in films.items():
+              p=list(q("en",action="query",titles=t,prop="langlinks",lllimit=500,redirects=1)["query"]["pages"].values())[0]
+              ok=False
+              for lang,tt in [("en",p["title"])]+[(l["lang"],l["*"]) for l in p.get("langlinks",[])]:
+                  try:
+                      pp=list(q(lang,action="query",titles=tt,prop="pageprops",redirects=1)["query"]["pages"].values())[0].get("pageprops",{})
+                      img=pp.get("page_image") or pp.get("page_image_free")
+                      if not img: continue
+                      url=list(q(lang,action="query",titles="File:"+img,prop="imageinfo",iiprop="url")["query"]["pages"].values())[0]["imageinfo"][0]["url"]
+                      im=Image.open(io.BytesIO(get(url))).convert("RGB"); w,h=im.size
+                      if h<w*1.2: out.append("skip %s %s:%s %dx%d"%(slug,lang,img,w,h)); continue
+                      im.resize((400,round(h*400/w)),Image.LANCZOS).save("assets/img/news/posters/%s.jpg"%slug,quality=85,optimize=True,progressive=True)
+                      out.append("USED %s %s:%s %s %dx%d"%(slug,lang,tt,img,w,h)); ok=True; break
+                  except Exception as e: pass
+              if not ok: out.append("NONE "+slug)
+          for t in ["Patrick McHale","Dario Argento","Alex Proyas","Brandon Lee","David Lynch","David Cronenberg","Jeff Goldblum","Goblin (band)","Jessica Harper","Elijah Wood"]:
+              p=list(q("en",action="query",titles=t,prop="langlinks",lllimit=500,redirects=1)["query"]["pages"].values())[0]
+              ll={l["lang"]:l["*"] for l in p.get("langlinks",[])}
+              out.append("%s az=%s ru=%s"%(t,ll.get("az"),ll.get("ru")))
+          BUA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"}
+          for s in ["over-the-garden-wall","suspiria","the-crow","eraserhead","the-fly"]:
+              try:
+                  h=get("https://letterboxd.com/film/%s/"%s,BUA).decode("utf8","ignore")
+                  m=re.search(r'<meta property="og:title" content="([^"]+)"',h)
+                  out.append("LB %s -> %s"%(s,m.group(1) if m else "?"))
+              except Exception as e: out.append("LB %s error %s"%(s,e))
+          open("hw-report.txt","w").write("\n".join(out)+"\n")
+          PY
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/hw.yml
+          git add assets/img/news/posters hw-report.txt
+          git commit -m "Halloween newsletter posters"
+          git push

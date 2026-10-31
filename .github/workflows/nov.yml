@@ -1,0 +1,67 @@
+name: November assets
+on:
+  push:
+    paths: [".github/workflows/nov.yml"]
+permissions:
+  contents: write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - run: |
+          python3 - <<'PY'
+          import json, urllib.parse, urllib.request, io
+          from PIL import Image, ImageOps
+          UA={"User-Agent":"KYNO newsletter (info@kyno.az)"}
+          def get(u): return urllib.request.urlopen(urllib.request.Request(u,headers=UA),timeout=40).read()
+          def q(lang,**kw):
+              kw["format"]="json"; return json.loads(get("https://%s.wikipedia.org/w/api.php?"%lang+urllib.parse.urlencode(kw)))
+          out=[]
+          # Stewart photo (free image)
+          pp=list(q("en",action="query",titles="Patrick Stewart",prop="pageprops",redirects=1)["query"]["pages"].values())[0]["pageprops"]
+          img=pp.get("page_image_free") or pp.get("page_image")
+          ii=list(q("en",action="query",titles="File:"+img,prop="imageinfo",iiprop="url|extmetadata")["query"]["pages"].values())[0]["imageinfo"][0]
+          md=ii.get("extmetadata",{})
+          out.append("STEWART %s | %s | %s"%(img,md.get("LicenseShortName",{}).get("value"),md.get("Artist",{}).get("value","")[:200]))
+          im=ImageOps.exif_transpose(Image.open(io.BytesIO(get(ii["url"])))).convert("L")
+          w,h=im.size; out.append("size %dx%d"%(w,h))
+          tw,th=(w,int(w*3/4)) if w/h<4/3 else (int(h*4/3),h)
+          left=(w-tw)//2; top=int((h-th)*0.12)
+          im=im.crop((left,top,left+tw,top+th)).resize((1040,780),Image.LANCZOS)
+          im=ImageOps.autocontrast(im,cutoff=1); im.save("assets/img/news/patrick-stewart.jpg",quality=84,optimize=True,progressive=True)
+          def poster(slug,title):
+              p=list(q("en",action="query",titles=title,prop="langlinks",lllimit=500,redirects=1)["query"]["pages"].values())[0]
+              for lang,tt in [("en",p.get("title",title))]+[(l["lang"],l["*"]) for l in p.get("langlinks",[])]:
+                  try:
+                      pp=list(q(lang,action="query",titles=tt,prop="pageprops",redirects=1)["query"]["pages"].values())[0].get("pageprops",{})
+                      im_=pp.get("page_image") or pp.get("page_image_free")
+                      if not im_: continue
+                      url=list(q(lang,action="query",titles="File:"+im_,prop="imageinfo",iiprop="url")["query"]["pages"].values())[0]["imageinfo"][0]["url"]
+                      x=Image.open(io.BytesIO(get(url))).convert("RGB"); w,h=x.size
+                      if h<w*1.2: continue
+                      x.resize((400,round(h*400/w)),Image.LANCZOS).save("assets/img/news/posters/%s.jpg"%slug,quality=85,optimize=True,progressive=True)
+                      out.append("POSTER %s %s:%s %s %dx%d"%(slug,lang,tt,im_,w,h)); return
+                  except Exception: pass
+              out.append("POSTER NONE "+slug)
+          poster("blade-runner","Blade Runner")
+          poster("blade-runner-2049","Blade Runner 2049")
+          poster("clayface","Clayface (film)")
+          poster("dune-part-three","Dune: Part Three")
+          poster("avengers-doomsday","Avengers: Doomsday")
+          for t in ["Patrick Stewart","Ian McKellen","Hugh Jackman","Denis Villeneuve","Ridley Scott","Ryan Gosling","Harrison Ford","Konstantin Stanislavski","Rutger Hauer","Jonathan Frakes","William Shatner","Kevin Feige","Jean-Luc Picard","Professor X","Ebenezer Scrooge","Macbeth","Avery Bullock","Timothée Chalamet","Zendaya"]:
+              try:
+                  p=list(q("en",action="query",titles=t,prop="langlinks",lllimit=500,redirects=1)["query"]["pages"].values())[0]
+                  ll={l["lang"]:l["*"] for l in p.get("langlinks",[])}
+                  out.append("%s\taz=%s\tru=%s"%(t,ll.get("az"),ll.get("ru")))
+              except Exception as e: out.append("%s err %s"%(t,e))
+          open("nov-report.txt","w").write("\n".join(out)+"\n")
+          PY
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/nov.yml
+          git add -A assets/img/news nov-report.txt
+          git commit -m "November newsletter assets"
+          git push

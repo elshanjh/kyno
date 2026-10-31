@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kim dedi? | KYNO</title>
+  <meta name="description" content="KYNO: Kino gündəliyinin sitat oyunu. Bu sitat hansı filmdəndir?">
+  <meta property="og:title" content="Kim dedi? | KYNO">
+  <meta property="og:description" content="KYNO: Kino gündəliyinin sitat oyunu. Bu sitat hansı filmdəndir?">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="az_AZ">
+  <meta property="og:image" content="https://www.kyno.az/assets/img/hero-wide.jpg">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="/favicon-48.png?v=2" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preload" href="/assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css?v=bbbf054f">
+  <meta name="src-path" content="kim-dedi/2026-noyabr/index.html">
+  <script>
+    /* The on-page editor loads only when asked for (add ?edit to the address)
+       or when this browser has already been set up for editing. */
+    document.addEventListener("DOMContentLoaded", function () {
+      var asked = /[?&]edit(?=$|[&=#])/.test(location.search), ready = false;
+      try { ready = !!localStorage.getItem("kyno_gh_token"); } catch (e) {}
+      if (asked || ready) { var s = document.createElement("script"); s.src = "/assets/edit.js?v=ef44ceed"; document.body.appendChild(s); }
+    });
+  </script>
+  <style>
+    .quiz { max-width: 40rem; }
+    .quiz-quote { font-style: italic; font-size: clamp(1.35rem, 2.6vw, 1.8rem); line-height: 1.45; border-left: 4px solid var(--red); padding-left: 1.1rem; margin: 0 0 2rem; }
+    .quiz-opts { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
+    .quiz-opts a { display: flex; align-items: center; gap: 1rem; border: 2px solid var(--black); background: var(--white); color: var(--black); text-decoration: none; font-weight: 700; font-size: 1.1rem; padding: 0 1rem 0 0; transition: transform .15s; }
+    .quiz-opts a:hover { transform: translateX(4px); }
+    .quiz-opts .k { background: var(--black); color: var(--white); width: 3rem; padding: .85rem 0; text-align: center; }
+    .quiz-opts .mark { margin-left: auto; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; }
+    .quiz-opts a.right { border-color: #1e8a3c; background: #e3f4e7; }
+    .quiz-opts a.right .k { background: #1e8a3c; }
+    .quiz-opts a.wrong { border-color: var(--red); background: #fbe3e4; }
+    .quiz-opts a.wrong .k { background: var(--red); }
+    .quiz-result { margin-top: 2rem; padding: 1.25rem 1.4rem; border-left: 4px solid currentColor; background: var(--white); }
+    .quiz-result[hidden] { display: none; }
+    .quiz-result.ok { color: #1e8a3c; } .quiz-result.no { color: var(--red); }
+    .quiz-result h2 { margin: 0 0 .4rem; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    .quiz-result p { color: var(--black); margin: 0; }
+    .quiz-hint { color: var(--ink-soft); margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Məzmuna keç</a>
+
+  <header class="masthead">
+    <div class="wrap">
+      <a class="wordmark" href="/" aria-label="KYNO, ana səhifə"><img src="/assets/img/logo.svg" alt="KYNO" width="584" height="307"></a>
+      <nav class="nav" aria-label="Əsas menyu">
+        <a href="/haqqimizda/">Biz kimik?</a>
+        <a href="/podkastlar/">Podkastlar</a>
+        <a href="/sosial-media/">Sosial media</a>
+        <a href="/destek/">Dəstək</a>
+        <a href="/elaqe/">Əlaqə</a>
+        <a class="nl-btn" href="/kino-gundeliyi/">Kino gündəliyi</a>
+        <a class="lang" href="/en/" lang="en" hreflang="en" aria-label="English">EN</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-hero">
+      <div class="wrap"><h1 class="page-title">Kim dedi?</h1></div>
+    </div>
+    <section class="band band--paper after-hero">
+      <div class="wrap quiz">
+        <p class="quiz-hint">Kino gündəliyi · Noyabr 2026</p>
+        <p class="quiz-quote">“Həyatdakı hər şeydən dərs çıxarmaq lazım deyil, Rayan. Bəzən sadəcə uğursuz olursan.”</p>
+        <ul class="quiz-opts" id="opts">
+          <li><a href="?cavab=a" data-k="a"><span class="k">A</span>Saving Private Ryan<span class="mark"></span></a></li>
+          <li><a href="?cavab=b" data-k="b"><span class="k">B</span>The Office<span class="mark"></span></a></li>
+          <li><a href="?cavab=c" data-k="c"><span class="k">C</span>Barbie<span class="mark"></span></a></li>
+        </ul>
+        <div class="quiz-result" id="result" hidden>
+          <h2 id="rtitle"></h2>
+          <p>Bu sözləri “The Office” serialında Maykl Skott (Stiv Karell) deyir. Belə sitatları hər gün <a href="https://www.instagram.com/kyno.az/">Instagram səhifəmizdə</a> paylaşırıq.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    (function () {
+      var correct = "b";
+      function show(pick) {
+        if (!/^[abc]$/.test(pick)) return;
+        document.querySelectorAll("#opts a").forEach(function (a) {
+          var k = a.getAttribute("data-k"), m = a.querySelector(".mark");
+          a.classList.remove("right", "wrong"); m.textContent = "";
+          if (k === correct) { a.classList.add("right"); m.textContent = "Düzgün cavab"; }
+          else if (k === pick) { a.classList.add("wrong"); m.textContent = "Sizin seçiminiz"; }
+        });
+        var r = document.getElementById("result"), t = document.getElementById("rtitle");
+        r.hidden = false;
+        r.className = "quiz-result " + (pick === correct ? "ok" : "no");
+        t.textContent = pick === correct ? "Düzdür, tapdınız!" : "Təəssüf, düz deyil";
+      }
+      document.querySelectorAll("#opts a").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          e.preventDefault(); var k = a.getAttribute("data-k");
+          history.replaceState(null, "", "?cavab=" + k); show(k);
+        });
+      });
+      show((new URLSearchParams(location.search).get("cavab") || "").toLowerCase());
+    })();
+  </script>
+
+  <footer class="footbar">
+    <div class="wrap">
+      <span>KYNO, 2019-cu ildən</span>
+      <a href="mailto:info@kyno.az">info@kyno.az</a>
+    </div>
+  </footer>
+</body>
+</html>

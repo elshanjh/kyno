@@ -48,3 +48,7 @@
 .more { margin-top: clamp(3rem, 7vw, 5rem); padding-top: clamp(2rem, 5vw, 3rem); border-top: 2px solid var(--black); }
 @media (max-width: 40rem) { .post { grid-template-columns: 1fr; } .post__poster { position: static; max-width: 12rem; } }
 .home-posts { margin-top: clamp(1.25rem, 3vw, 2rem); }
+.post-card__poster--duo { position: relative; padding-bottom: 1.6rem; }
+.post-card__poster--duo img + img { position: absolute; width: 70%; right: -.6rem; bottom: 0; transform: rotate(4deg); }
+.post + .post { margin-top: clamp(3rem, 7vw, 5rem); padding-top: clamp(3rem, 7vw, 5rem); border-top: 2px solid var(--black); }
+.post .sub { margin-bottom: .3rem; }

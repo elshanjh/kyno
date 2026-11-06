@@ -68,3 +68,13 @@
 .stars { color: var(--red); letter-spacing: .05em; }
 .stars__off { color: rgba(0,0,0,.18); }
 .post-series { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .72rem; color: var(--white); background: var(--black); display: inline-block; padding: .25rem .55rem; margin-top: .2rem; }
+
+/* Labels use the site's display font (has a proper Ə); names are not capitalised */
+.blog-label, .post-kicker, .post-byline, .hero-kicker, .author-count, .chip, .spoiler, .team-card p {
+  font-family: var(--display); letter-spacing: .06em; font-weight: 700;
+}
+.blog-label, .author-count, .team-card p { font-size: .95rem; }
+.post-kicker, .post-byline { font-size: .9rem; }
+.chip { text-transform: none; font-size: 1.05rem; letter-spacing: .03em; }
+.post-byline { text-transform: none; letter-spacing: .03em; }
+.hero-kicker { font-size: .95rem; }

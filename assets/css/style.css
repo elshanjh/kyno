@@ -549,3 +549,14 @@ h1, h2, h3, p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .btn, .ticket, .social, .poster img, .fest-link { transition: none; }
 }
+
+/* ---------- Dropdown under "Biz kimik?" ---------- */
+.nav-drop { position: relative; display: inline-flex; }
+.nav-drop > a::after { content: "▾"; font-size: .7em; margin-left: .3em; color: var(--red); }
+.nav-menu { position: absolute; top: 100%; left: -.9rem; z-index: 30; min-width: 11rem; padding: .5rem 0; background: #161616;
+  border-top: 3px solid var(--red); box-shadow: 0 .8rem 1.6rem rgba(0,0,0,.45);
+  opacity: 0; visibility: hidden; transform: translateY(.3rem); transition: opacity .15s, transform .15s, visibility .15s; }
+.nav-drop:hover .nav-menu, .nav-drop:focus-within .nav-menu { opacity: 1; visibility: visible; transform: none; }
+.nav .nav-menu a { display: block; padding: .45rem .9rem; border-bottom: 0; white-space: nowrap; }
+.nav .nav-menu a:hover { color: var(--red); }
+@media (max-width: 40rem) { .nav-menu { left: 0; } }

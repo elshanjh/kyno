@@ -1,0 +1,33 @@
+name: Fetch reviews raw
+on:
+  push:
+    paths: [".github/workflows/lbr2.yml"]
+permissions:
+  contents: write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          import urllib.request, re, html, json
+          BUA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36","Accept-Language":"en"}
+          out={}
+          for k,u in [("masud","https://letterboxd.com/anjollras/film/by-the-bluest-of-seas/"),("eldar","https://letterboxd.com/eldarhasanly/film/dumka/")]:
+              h=urllib.request.urlopen(urllib.request.Request(u,headers=BUA),timeout=40).read().decode("utf8","ignore")
+              i=h.find("body-text")
+              seg=h[i-300:i+12000] if i>0 else ""
+              paras=re.findall(r"<p>(.*?)</p>",seg,re.S)
+              txt=[html.unescape(re.sub(r"<[^>]+>","",re.sub(r"<br\s*/?>","\n",p))).strip() for p in paras]
+              d=re.search(r'Watched\s*(?:on)?[^<]*<[^>]*>([^<]+)',h) or re.search(r'(\d{1,2}\s\w{3}\s\d{4})',h)
+              out[k]={"paras":txt,"date":d.group(1) if d else None,"desc":(re.search(r'<meta name="description" content="([^"]*)"',h) or [None,None])[1]}
+          open("lbr2.json","w").write(json.dumps(out,ensure_ascii=False,indent=1))
+          PY
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git rm -q .github/workflows/lbr2.yml
+          git add lbr2.json
+          git commit -m "Fetched reviews raw"
+          git push

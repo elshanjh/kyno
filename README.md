@@ -14,6 +14,7 @@ GitHub Pages. No build step: whatever is in the `main` branch is the live site.
 | Support | `destek/index.html` | `en/support/index.html` |
 | Contact | `elaqe/index.html` | `en/contact/index.html` |
 | Kino gündəliyi | `kino-gundeliyi/index.html` | `en/newsletter/index.html` |
+| Yazılarımız | `yazilar/index.html` | (Azerbaijani only) |
 
 The header, menu and contact block are repeated in every page, and each page
 exists once per language, so a change to shared text has to be made in each file.
@@ -54,3 +55,14 @@ code from the new post's link. The embeds load a script from instagram.com.
 
 Big Shoulders Display and Literata, both under the SIL Open Font License and
 served from `assets/fonts/`.
+
+## Yazılarımız (reviews and articles)
+
+- `yazilar/index.html`: all posts, newest first, with the author list on top.
+- `yazilar/<film>/index.html`: one page per review (for example `yazilar/blade-runner/`).
+- `yazilar/muellif/<author>/index.html`: one page per author with all their posts.
+- The home page shows the two newest posts between the `yazilar:start` and `yazilar:end` comments.
+- Styles for this section are in `assets/css/blog.css`. Posters are in `assets/img/news/posters/`.
+
+To add a post, copy an existing post folder, change the text, and add its card to `yazilar/index.html`,
+the author's page and (if it is one of the two newest) the home page. Or ask Claude to add it.

@@ -1,0 +1,50 @@
+/* Yazılarımız (blog) section */
+.blog-intro { color: var(--ink-soft); margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
+.blog-label, .post-kicker, .post-byline, .hero-kicker, .author-count, .chip, .spoiler {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; font-weight: 700;
+}
+.blog-label { font-size: .8rem; color: var(--red); margin-bottom: .8rem; }
+.hero-kicker { font-size: .8rem; color: var(--dim); margin-bottom: .6rem; }
+.hero-kicker a { color: var(--white); text-decoration: none; border-bottom: 2px solid var(--red); }
+
+.chips { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+.chip { display: inline-flex; align-items: center; gap: .55rem; font-size: .8rem; text-decoration: none; color: var(--black);
+  background: var(--white); border: 2px solid var(--black); padding: .35rem .8rem .35rem .4rem; }
+.chip:hover, .chip[aria-current="page"] { background: var(--black); color: var(--white); }
+.chip:first-child { padding-left: .8rem; }
+.chip__ini { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--red); color: var(--white); font-size: .85rem; letter-spacing: 0; }
+.chip__n { color: var(--red); }
+.chip[aria-current="page"] .chip__n, .chip:hover .chip__n { color: #ff9a9e; }
+
+.post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr)); gap: clamp(1rem, 2.5vw, 1.75rem); }
+.post-card { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1.25rem; background: var(--white); padding: 1.1rem; border-top: 4px solid var(--red);
+  box-shadow: 0 .4rem 1.2rem rgba(0,0,0,.08); transition: transform .2s, box-shadow .2s; }
+.post-card:hover { transform: translateY(-3px); box-shadow: 0 .9rem 2rem rgba(0,0,0,.14); }
+.post-card__poster img { width: 100%; height: auto; display: block; box-shadow: 0 .3rem .8rem rgba(0,0,0,.25); }
+.post-kicker { font-size: .72rem; color: var(--ink-soft); margin-bottom: .35rem; }
+.post-card__title { font-family: "Big Shoulders Display", sans-serif; font-weight: 800; font-size: clamp(1.7rem, 3vw, 2.2rem); line-height: 1; margin-bottom: .6rem; }
+.post-card__title a { color: var(--black); text-decoration: none; }
+.post-card__title a:hover { color: var(--red); }
+.post-card__quote { font-style: italic; border-left: 3px solid var(--red); padding-left: .7rem; margin-bottom: .6rem; line-height: 1.4; }
+.post-card__excerpt { color: var(--ink-soft); font-size: .95rem; line-height: 1.5; margin-bottom: .8rem; }
+.post-byline { font-size: .72rem; color: var(--ink-soft); }
+.post-byline a { color: var(--red); text-decoration: none; }
+.post-byline a:hover { text-decoration: underline; }
+@media (max-width: 30rem) { .post-card { grid-template-columns: 6rem 1fr; gap: .9rem; } }
+
+.author-head { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2rem; }
+.author-ini { flex: none; display: grid; place-items: center; width: 4.5rem; height: 4.5rem; border-radius: 50%; background: var(--red); color: var(--white);
+  font-family: "Big Shoulders Display", sans-serif; font-weight: 800; font-size: 2.4rem; }
+.author-count { font-size: .8rem; color: var(--red); margin-bottom: .3rem; }
+
+.post { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.post__poster { position: sticky; top: 1.5rem; }
+.post__poster img { width: 100%; height: auto; display: block; box-shadow: 0 .8rem 2rem rgba(0,0,0,.25); }
+.post-byline--top { margin-bottom: .4rem; }
+.post-quote { font-style: italic; font-size: clamp(1.25rem, 2.2vw, 1.55rem); line-height: 1.45; border-left: 4px solid var(--red); padding-left: 1rem; margin: 1.25rem 0 1.5rem; }
+.spoiler { display: inline-block; background: var(--red); color: var(--white); font-size: .75rem; padding: .3rem .6rem; }
+.post-lb a, .post-back a { font-weight: 700; }
+.post-back { margin-top: 2rem !important; }
+.more { margin-top: clamp(3rem, 7vw, 5rem); padding-top: clamp(2rem, 5vw, 3rem); border-top: 2px solid var(--black); }
+@media (max-width: 40rem) { .post { grid-template-columns: 1fr; } .post__poster { position: static; max-width: 12rem; } }
+.home-posts { margin-top: clamp(1.25rem, 3vw, 2rem); }
